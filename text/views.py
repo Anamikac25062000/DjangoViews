@@ -332,11 +332,14 @@ class SnippetDetailView(RetrieveAPIView):
     queryset = Snippet.objects.all()
 
 class SnippetUpdateView(UpdateAPIView):
-    def get(self, *args, **kwargs):
-        instance = Snippet.objects.filter(pk=kwargs.get("pk"))
-        if instance.exists():
-            serializer = SnippetDetailsSerializer(instance.first())
-            return Response(serializer.data)
+    queryset = Snippet.objects.all()
+    serializer_class = SnippetUpdateSerializer
+    def patch(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data,partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message":"success"},status=200)
         return Response({"message":"Failed"}, "error":serializer.errors), status=400
     
 class SnippetDeleteView(APIView):
