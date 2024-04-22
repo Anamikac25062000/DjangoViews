@@ -10,3 +10,14 @@ class UpdateAPIView(mixins.UpdateModelMixin, GenericAPIView):
         return self.partial_update(request, *args, **kwargs)
 
     
+class ListAPIView(mixins.ListModelMixin,GenericAPIView):
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+    
+class RetrieveAPIView(mixins.RetrieveModelMixin, GenericAPIView):
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+    
+class GenericAPIView(views.APIView):
+    queryset = None
+    serializer_class = None

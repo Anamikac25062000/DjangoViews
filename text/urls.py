@@ -17,5 +17,6 @@ urlpatterns = [
     path('snippet/update/<int:pk>',SnippetUpdateView.as_view(),name="snippet-update"),
     path('snippet/delete/<int:pk>',SnippetDeleteView.as_view(),name="snippet-delete"),
     path('snippet/delete/bulk',SnippetDeleteView.as_view(),name="snippet-delete"),
+    path('snippet/list',SnippetListView.as_view(),name="snippet-list"),
     path('', include(router.urls)),
 ]

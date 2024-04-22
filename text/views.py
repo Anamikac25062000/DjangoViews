@@ -3,6 +3,7 @@ from django.db.models import Q
 from django.http.response import Http404
 from rest_framework import generics
 from rest_framework import viewsets
+from rest_framework.pagination import PageNumberPagination
 from .pagination import *
 from .serializers import *
 from rest_framework.views import APIView
@@ -350,10 +351,11 @@ class SnippetDeleteView(APIView):
         snpdata = data.get("snipp")
         snipp_objects = Snippet.objects.filter(pk_in=snpdata)
     
-class snippListView(ListAPIView):
-    permission_classes=[AllowAny]
+class SnippetListView(ListAPIView):
     queryset = Snippet.objects.all()
     serializer_class = SnippetsSerializer
+    def get_queryset(self):
+        return super().get_queryset()
 
 class TagsdeleteView(DestroyAPIView):
     queryset = Tag.objects.all()
